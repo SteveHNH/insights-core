@@ -244,7 +244,7 @@ class TextFileProvider(FileProvider):
             rc, out = self.ctx.shell_out(args, keep_rc=True, env=SAFE_ENV)
             self.rc = rc
             return out
-        with codecs.open(self.path, "r", encoding="utf-8", errors="surrogateescape") as f:
+        with codecs.open(self.path, "r", encoding="utf-16", errors="surrogatepass") as f:
             return [l.rstrip("\n") for l in f]
 
     def _stream(self):
@@ -262,7 +262,7 @@ class TextFileProvider(FileProvider):
                     with streams.connect(*args, env=SAFE_ENV) as s:
                         yield s
                 else:
-                    with codecs.open(self.path, "r", encoding="utf-8", errors="surrogateescape") as f:
+                    with codecs.open(self.path, "r", encoding="utf-16", errors="surrogatepass") as f:
                         yield f
         except StopIteration:
             raise
